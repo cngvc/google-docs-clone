@@ -1,7 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
 import { useEditorStore } from "@/store/use-editor-store";
 import {
   BoldIcon,
@@ -16,33 +15,10 @@ import {
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
-
-interface ToolbarButtonProps {
-  onClick?: () => void;
-  isActive?: boolean;
-  icon: LucideIcon;
-}
-
-const ToolbarButton = ({
-  onClick,
-  isActive = true,
-  icon: Icon,
-}: ToolbarButtonProps) => {
-  return (
-    <Button
-      variant={"ghost"}
-      disabled={!isActive}
-      onClick={onClick}
-      size={"sm"}
-      className={cn(
-        "h-7 min-w-7 hover:bg-neutral-200/80",
-        isActive && "bg-neutral-200",
-      )}
-    >
-      <Icon className="size-4" />
-    </Button>
-  );
-};
+import FontFamilyButton from "./font-family";
+import HeadingLevelButton from "./heading-level";
+import TextColorButton from "./text-color";
+import ToolbarButton from "./toolbar-button";
 
 const Toolbar = () => {
   const { editor } = useEditorStore();
@@ -64,58 +40,96 @@ const Toolbar = () => {
       {
         label: "Redo",
         icon: Redo2Icon,
-        onClick: () => {},
+        onClick: () => {
+          editor?.chain().focus().redo().run();
+        },
       },
       {
         label: "Print",
         icon: PrinterIcon,
-        onClick: () => {},
+        onClick: () => {
+          window.print();
+        },
       },
       {
         label: "Spell Check",
         icon: SpellCheckIcon,
-        onClick: () => {},
+        onClick: () => {
+          const cur = editor?.view.dom.getAttribute("spellcheck");
+          editor?.view.dom.setAttribute("spellcheck", `${cur == "false"}`);
+        },
       },
     ],
     [
       {
         label: "Bold",
         icon: BoldIcon,
-        onClick: () => {},
+        isActive: editor?.isActive("bold"),
+        onClick: () => {
+          editor?.chain().focus().toggleBold().run();
+        },
       },
       {
         label: "Italic",
         icon: ItalicIcon,
-        onClick: () => {},
+        isActive: editor?.isActive("italic"),
+        onClick: () => {
+          editor?.chain().focus().toggleItalic().run();
+        },
       },
       {
         label: "Underline",
         icon: UnderlineIcon,
-        onClick: () => {},
+        isActive: editor?.isActive("underline"),
+        onClick: () => {
+          editor?.chain().focus().toggleUnderline().run();
+        },
       },
     ],
     [
       {
         label: "Comment",
         icon: MessageSquarePlusIcon,
+        isActive: false,
         onClick: () => {},
       },
       {
         label: "List Todo",
         icon: ListTodoIcon,
+        isActive: false,
         onClick: () => {},
       },
       {
         label: "Remove Formatting",
         icon: RemoveFormattingIcon,
+        isActive: false,
         onClick: () => {},
       },
     ],
   ];
 
   return (
-    <div className="bg-slate-200 px-2.5 py-0.5 rounded-none min-h-10 flex items-center gap-x-0.5">
+    <div className="bg-slate-200 px-2.5 py-0.5 rounded-none min-h-12 flex items-center gap-x-0.5">
       {sections[0].map((item) => (
+        <ToolbarButton key={item.label} {...item} />
+      ))}
+
+      <Separator orientation="vertical" className="h-6 bg-slate-300" />
+      <FontFamilyButton />
+
+      <Separator orientation="vertical" className="h-6 bg-slate-300" />
+      <HeadingLevelButton />
+
+      <Separator orientation="vertical" className="h-6 bg-slate-300" />
+      <TextColorButton />
+
+      <Separator orientation="vertical" className="h-6 bg-slate-300" />
+      {sections[1].map((item) => (
+        <ToolbarButton key={item.label} {...item} />
+      ))}
+
+      <Separator orientation="vertical" className="h-6 bg-slate-300" />
+      {sections[2].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
     </div>

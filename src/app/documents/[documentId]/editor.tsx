@@ -1,6 +1,9 @@
 "use client";
 
 import BulletList from "@tiptap/extension-bullet-list";
+import { Color } from "@tiptap/extension-color";
+import FontFamily from "@tiptap/extension-font-family";
+import Highlight from "@tiptap/extension-highlight";
 import Image from "@tiptap/extension-image";
 import ListItem from "@tiptap/extension-list-item";
 import Table from "@tiptap/extension-table";
@@ -9,6 +12,8 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
+import TextStyle from "@tiptap/extension-text-style";
+import Underline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 
 import { useEditorStore } from "@/store/use-editor-store";
@@ -18,6 +23,8 @@ import ImageResize from "tiptap-extension-resize-image";
 const Editor = () => {
   const { setEditor } = useEditorStore();
   const editor = useEditor({
+    autofocus: true,
+    immediatelyRender: false,
     onCreate(props) {
       setEditor(props.editor);
     },
@@ -64,27 +71,33 @@ const Editor = () => {
       TableRow,
       TableHeader,
       TableCell,
-
       Image,
       ImageResize,
+      Underline,
+      FontFamily,
+      TextStyle,
+      Highlight,
+      Color,
     ],
     content: `
+    Hello 1
+    Hello 2
     <table>
-          <tbody>
-            <tr>
-              <th>Name</th>
-              <th colspan="3">Description</th>
-            </tr>
-            <tr>
-              <td>Cyndi Lauper</td>
-              <td>Singer</td>
-              <td>Songwriter</td>
-              <td>Actress</td>
-            </tr>
-          </tbody>
-        </table>  
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <th colspan="3">Description</th>
+        </tr>
+        <tr>
+          <td>Cyndi Lauper</td>
+          <td>Singer</td>
+          <td>Songwriter</td>
+          <td>Actress</td>
+        </tr>
+      </tbody>
+    </table>  
 
-        <img src="https://placehold.co/800x400" />
+    <img src="https://placehold.co/800x400" />
 
     `,
   });
