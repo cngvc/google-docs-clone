@@ -11,11 +11,38 @@ import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import StarterKit from "@tiptap/starter-kit";
 
+import { useEditorStore } from "@/store/use-editor-store";
 import { EditorContent, useEditor } from "@tiptap/react";
 import ImageResize from "tiptap-extension-resize-image";
 
 const Editor = () => {
+  const { setEditor } = useEditorStore();
   const editor = useEditor({
+    onCreate(props) {
+      setEditor(props.editor);
+    },
+    onDestroy() {
+      setEditor(null);
+    },
+    onUpdate(props) {
+      setEditor(props.editor);
+    },
+    onSelectionUpdate(props) {
+      setEditor(props.editor);
+    },
+    onTransaction(props) {
+      setEditor(props.editor);
+    },
+    onFocus(props) {
+      setEditor(props.editor);
+    },
+    onBlur(props) {
+      setEditor(props.editor);
+    },
+    onContentError(props) {
+      setEditor(props.editor);
+    },
+
     editorProps: {
       attributes: {
         class:
