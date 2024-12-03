@@ -18,7 +18,7 @@ const TextColorButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-8 min-w-8 shrink-0 flex flex-col items-center justify-center rounded-2xl hover:bg-slate-300/80 px-1.5 overflow-hidden text-sm">
+        <button className="h-8 min-w-8 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-slate-300/80 px-1.5 overflow-hidden text-sm">
           <span className="text-sm">A</span>
           <div className="h-0.5 w-full" style={{ backgroundColor: value }} />
         </button>

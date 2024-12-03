@@ -15,8 +15,12 @@ import {
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
+import AlignButton from "./align";
 import FontFamilyButton from "./font-family";
 import HeadingLevelButton from "./heading-level";
+import ImageButton from "./image";
+import LinkButton from "./link";
+import ListButton from "./list";
 import TextColorButton from "./text-color";
 import ToolbarButton from "./toolbar-button";
 
@@ -109,7 +113,7 @@ const Toolbar = () => {
   ];
 
   return (
-    <div className="bg-slate-200 px-2.5 py-0.5 rounded-none min-h-12 flex items-center gap-x-0.5">
+    <div className="bg-slate-200 px-2.5 py-0.5 rounded-none min-h-12 flex items-center gap-x-1 z-50">
       {sections[0].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
@@ -120,8 +124,16 @@ const Toolbar = () => {
       <Separator orientation="vertical" className="h-6 bg-slate-300" />
       <HeadingLevelButton />
 
-      <Separator orientation="vertical" className="h-6 bg-slate-300" />
       <TextColorButton />
+
+      <Separator orientation="vertical" className="h-6 bg-slate-300" />
+      <LinkButton />
+
+      <ImageButton />
+
+      <AlignButton />
+
+      <ListButton />
 
       <Separator orientation="vertical" className="h-6 bg-slate-300" />
       {sections[1].map((item) => (

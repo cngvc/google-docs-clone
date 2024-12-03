@@ -5,6 +5,7 @@ import { LucideIcon } from "lucide-react";
 interface ToolbarButtonProps {
   onClick?: () => void;
   isActive?: boolean;
+  classNames?: string;
   icon: LucideIcon;
 }
 
@@ -19,7 +20,7 @@ const ToolbarButton = ({
       onClick={onClick}
       size={"sm"}
       className={cn(
-        "h-8 min-w-8 hover:bg-slate-300/80",
+        "h-8 min-w-8 hover:bg-slate-300/80 px-2",
         isActive && "bg-slate-200",
       )}
     >

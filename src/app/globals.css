@@ -253,4 +253,21 @@
       outline: 3px solid var(--primary);
     }
   }
+
+  code {
+    @apply bg-blue-400 text-black;
+    border-radius: 0.4rem;
+    font-size: 0.85rem;
+    padding: 0.25em 0.3em;
+  }
+
+  /* Link styles */
+  a {
+    @apply text-blue-600;
+    cursor: pointer;
+
+    &:hover {
+      @apply text-blue-600;
+    }
+  }
 }
