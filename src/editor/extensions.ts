@@ -17,6 +17,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
 import ImageResize from "tiptap-extension-resize-image";
+import { LineHeightExtension } from "./line-height";
 
 export const extensions = [
   StarterKit,
@@ -40,6 +41,7 @@ export const extensions = [
   Highlight,
   Color,
   FontSizeExtension,
+  LineHeightExtension,
   TextAlign.configure({
     types: ["heading", "paragraph"],
   }),

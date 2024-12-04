@@ -1,3 +1,5 @@
+"use client";
+
 import { extensions } from "@/editor/extensions";
 import { useEditorStore } from "@/store/use-editor-store";
 import { useEditor as useEditorTipTap } from "@tiptap/react";
@@ -40,6 +42,10 @@ export const useEditor = () => {
     },
     extensions: extensions,
     content: `
+        Hello 1
+        Hello 2
+        Hello 1
+        Hello 2
         Hello 1
         Hello 2
         <table>

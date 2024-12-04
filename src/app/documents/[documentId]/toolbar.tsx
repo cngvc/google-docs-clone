@@ -20,6 +20,7 @@ import FontFamilyButton from "./font-family";
 import FontSizeButton from "./font-size";
 import HeadingLevelButton from "./heading-level";
 import ImageButton from "./image";
+import LineHeightButton from "./line-height";
 import LinkButton from "./link";
 import ListButton from "./list";
 import TextColorButton from "./text-color";
@@ -114,7 +115,7 @@ const Toolbar = () => {
   ];
 
   return (
-    <div className="bg-slate-200 px-2.5 py-0.5 rounded-none min-h-12 flex items-center gap-x-1 z-50">
+    <div className="bg-slate-200 px-2.5 py-0.5 rounded-full min-h-12 flex items-center gap-x-1 z-50">
       {sections[0].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
@@ -137,8 +138,10 @@ const Toolbar = () => {
       <ListButton />
 
       <Separator orientation="vertical" className="h-6 bg-slate-300" />
-
       <FontSizeButton />
+
+      <Separator orientation="vertical" className="h-6 bg-slate-300" />
+      <LineHeightButton />
 
       <Separator orientation="vertical" className="h-6 bg-slate-300" />
       {sections[1].map((item) => (
