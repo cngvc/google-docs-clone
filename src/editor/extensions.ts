@@ -1,3 +1,4 @@
+import { FontSizeExtension } from "@/extensions/font-size";
 import BulletList from "@tiptap/extension-bullet-list";
 import { Color } from "@tiptap/extension-color";
 import FontFamily from "@tiptap/extension-font-family";
@@ -38,6 +39,7 @@ export const extensions = [
   TextStyle,
   Highlight,
   Color,
+  FontSizeExtension,
   TextAlign.configure({
     types: ["heading", "paragraph"],
   }),

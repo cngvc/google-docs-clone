@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import AlignButton from "./align";
 import FontFamilyButton from "./font-family";
+import FontSizeButton from "./font-size";
 import HeadingLevelButton from "./heading-level";
 import ImageButton from "./image";
 import LinkButton from "./link";
@@ -134,6 +135,10 @@ const Toolbar = () => {
       <AlignButton />
 
       <ListButton />
+
+      <Separator orientation="vertical" className="h-6 bg-slate-300" />
+
+      <FontSizeButton />
 
       <Separator orientation="vertical" className="h-6 bg-slate-300" />
       {sections[1].map((item) => (
