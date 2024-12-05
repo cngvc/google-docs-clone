@@ -1,21 +1,76 @@
 "use client";
 
 import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from "@/constants/margins";
+import { Id } from "@convex/_generated/dataModel";
 import {
   ClientSideSuspense,
   LiveblocksProvider,
   RoomProvider,
 } from "@liveblocks/react/suspense";
 import { useParams } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
+import { getDocuments, getUsers } from "./actions";
+
+type User = { id: string; name: string; avatar: string; color: string };
 
 export function Room({ children }: { children: ReactNode }) {
   const params = useParams();
+  const [users, $users] = useState<User[]>([]);
+
+  const fetchUsers = useMemo(
+    () => async () => {
+      try {
+        const list = await getUsers();
+        $users(list);
+      } catch {
+        toast.error("Failed to fetch users");
+      }
+    },
+    [],
+  );
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
     <LiveblocksProvider
-      publicApiKey={
-        "pk_dev_pQIfud25e7o7qoKBuKJjr9f84bI0-coz-sFgPRIbcFvrSzw2nbBX6FImzpfSQTCt"
-      }
+      throttle={16}
+      authEndpoint={async () => {
+        const endpoint = "/api/liveblocks-auth";
+        const room = params.documentId as string;
+
+        const response = await fetch(endpoint, {
+          method: "POST",
+          body: JSON.stringify({ room }),
+        });
+
+        return await response.json();
+      }}
+      resolveUsers={({ userIds }) => {
+        return userIds.map(
+          (userId) => users.find((user) => user.id === userId) ?? undefined,
+        );
+      }}
+      resolveMentionSuggestions={({ text }) => {
+        let filteredUsers = users;
+
+        if (text) {
+          filteredUsers = users.filter((user) =>
+            user.name.toLowerCase().includes(text.toLowerCase()),
+          );
+        }
+
+        return filteredUsers.map((user) => user.id);
+      }}
+      resolveRoomsInfo={async ({ roomIds }) => {
+        const documents = await getDocuments(roomIds as Id<"documents">[]);
+        return documents.map((document) => ({
+          id: document.id,
+          name: document.name,
+        }));
+      }}
     >
       <RoomProvider
         id={params.documentId as string}
