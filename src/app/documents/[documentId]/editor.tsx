@@ -56,7 +56,7 @@ const Editor = ({ initialContent }: EditorProps) => {
       attributes: {
         class:
           "focus:outline-none print:border-0 bg-white border border-gray-100 flex flex-col min-h-[1054px] w-[816px] pt-10 pb-10 cursor-text",
-        style: "padding-left: 56px; padding-right: 56px",
+        style: `padding-left: ${leftMargin}px; padding-right: ${rightMargin}px`,
       },
     },
     extensions: [...extensions, liveblocks],

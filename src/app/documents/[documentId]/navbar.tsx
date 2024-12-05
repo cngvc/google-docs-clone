@@ -34,12 +34,14 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { useEditorStore } from "@/store/use-editor-store";
-import { UserButton } from "@clerk/nextjs";
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import { api } from "@convex/_generated/api";
 import { Doc } from "@convex/_generated/dataModel";
 import { useMutation } from "convex/react";
 import { toast } from "sonner";
+import Avatars from "./avatars";
 import DocumentInput from "./document-input";
+import { Inbox } from "./inbox";
 
 interface NavbarProps {
   data: Doc<"documents">;
@@ -107,7 +109,7 @@ const Navbar = ({ data }: NavbarProps) => {
     onDownload(blob, `${data?.title ?? "document"}.txt`);
   };
   return (
-    <nav className="flex items-center justify-between">
+    <nav className="flex items-center justify-between mt-2">
       <div className="flex gap-2 items-center">
         <Link href="/">
           <Image src="/logo.png" alt="Logo" width={32} height={32} />
@@ -269,6 +271,14 @@ const Navbar = ({ data }: NavbarProps) => {
         </div>
       </div>
       <div className="flex gap-3 items-center pl-6">
+        <Avatars />
+        <Inbox />
+        <OrganizationSwitcher
+          afterCreateOrganizationUrl="/"
+          afterLeaveOrganizationUrl="/"
+          afterSelectOrganizationUrl="/"
+          afterSelectPersonalUrl="/"
+        />
         <UserButton />
       </div>
     </nav>

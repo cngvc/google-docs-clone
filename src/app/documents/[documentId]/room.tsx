@@ -1,5 +1,6 @@
 "use client";
 
+import FullscreenLoader from "@/components/ui/fullscreen-loader";
 import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from "@/constants/margins";
 import { Id } from "@convex/_generated/dataModel";
 import {
@@ -79,7 +80,9 @@ export function Room({ children }: { children: ReactNode }) {
           rightMargin: RIGHT_MARGIN_DEFAULT,
         }}
       >
-        <ClientSideSuspense fallback={<div>Loading…</div>}>
+        <ClientSideSuspense
+          fallback={<FullscreenLoader label="Authenticating..." />}
+        >
           {children}
         </ClientSideSuspense>
       </RoomProvider>

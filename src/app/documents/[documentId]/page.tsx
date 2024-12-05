@@ -1,7 +1,9 @@
+import FullscreenLoader from "@/components/ui/fullscreen-loader";
 import { auth } from "@clerk/nextjs/server";
 import { api } from "@convex/_generated/api";
 import { Id } from "@convex/_generated/dataModel";
 import { preloadQuery } from "convex/nextjs";
+import { Suspense } from "react";
 import Document from "./document";
 
 interface DocumentIdPageProps {
@@ -24,7 +26,11 @@ const DocumentIdPage = async ({ params }: DocumentIdPageProps) => {
     { token },
   );
 
-  return <Document preloadedDocument={preloadedDocument} />;
+  return (
+    <Suspense fallback={<FullscreenLoader />}>
+      <Document preloadedDocument={preloadedDocument} />
+    </Suspense>
+  );
 };
 
 export default DocumentIdPage;

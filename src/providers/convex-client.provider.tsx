@@ -25,6 +25,7 @@ export function ConvexClientProvider({ children }: { children: ReactNode }) {
             <SignIn routing="hash" />
           </div>
         </Unauthenticated>
+
         <AuthLoading>
           <FullscreenLoader label="Auth loading..." />
         </AuthLoading>

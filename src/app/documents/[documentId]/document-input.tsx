@@ -6,7 +6,7 @@ import { Id } from "@convex/_generated/dataModel";
 import { useStatus } from "@liveblocks/react";
 import { useMutation } from "convex/react";
 import { LoaderIcon } from "lucide-react";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
 import { toast } from "sonner";
 
@@ -28,7 +28,6 @@ const DocumentInput = ({ title, id }: DocumentInputProps) => {
 
   const debouncedUpdate = useDebounce((newValue: string) => {
     if (newValue === title) return;
-
     $isPending(true);
     mutate({ id, title: newValue })
       .then(() => toast.success("Document updated"))
@@ -44,7 +43,6 @@ const DocumentInput = ({ title, id }: DocumentInputProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     $isPending(true);
     mutate({ id, title: value })
       .then(() => {
@@ -55,9 +53,13 @@ const DocumentInput = ({ title, id }: DocumentInputProps) => {
       .finally(() => $isPending(false));
   };
 
-  const showLoader =
-    isPending || status === "connecting" || status === "reconnecting";
-  const showError = status === "disconnected";
+  const showLoader = useMemo(() => {
+    return isPending || status === "connecting" || status === "reconnecting";
+  }, [isPending, status]);
+
+  const showError = useMemo(() => {
+    return status === "disconnected";
+  }, [status]);
 
   return (
     <div className="flex items-center gap-2">
