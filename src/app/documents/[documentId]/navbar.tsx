@@ -34,6 +34,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { useEditorStore } from "@/store/use-editor-store";
+import { UserButton } from "@clerk/nextjs";
 import { DocumentInput } from "./document-input";
 
 interface NavbarProps {
@@ -254,7 +255,9 @@ const Navbar = ({ data }: NavbarProps) => {
           </div>
         </div>
       </div>
-      <div className="flex gap-3 items-center pl-6"></div>
+      <div className="flex gap-3 items-center pl-6">
+        <UserButton />
+      </div>
     </nav>
   );
 };
