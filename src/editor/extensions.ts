@@ -20,7 +20,9 @@ import ImageResize from "tiptap-extension-resize-image";
 import { LineHeightExtension } from "./line-height";
 
 export const extensions = [
-  StarterKit,
+  StarterKit.configure({
+    history: false,
+  }),
   ListItem,
   BulletList,
   TaskList,

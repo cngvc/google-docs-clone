@@ -35,19 +35,32 @@ import {
 } from "@/components/ui/menubar";
 import { useEditorStore } from "@/store/use-editor-store";
 import { UserButton } from "@clerk/nextjs";
-import { DocumentInput } from "./document-input";
+import { api } from "@convex/_generated/api";
+import { Doc } from "@convex/_generated/dataModel";
+import { useMutation } from "convex/react";
+import { toast } from "sonner";
+import DocumentInput from "./document-input";
 
 interface NavbarProps {
-  data?: {
-    title: string;
-  };
+  data: Doc<"documents">;
 }
 
 const Navbar = ({ data }: NavbarProps) => {
   const router = useRouter();
   const { editor } = useEditorStore();
+  const mutation = useMutation(api.documents.create);
 
-  const onNewDocument = () => {};
+  const onNewDocument = () => {
+    mutation({
+      title: "Untitled document",
+      initialContent: "",
+    })
+      .catch(() => toast.error("Something went wrong"))
+      .then((id) => {
+        toast.success("Document created");
+        router.push(`/documents/${id}`);
+      });
+  };
 
   const insertTable = ({ rows, cols }: { rows: number; cols: number }) => {
     editor
@@ -100,7 +113,7 @@ const Navbar = ({ data }: NavbarProps) => {
           <Image src="/logo.png" alt="Logo" width={32} height={32} />
         </Link>
         <div className="flex flex-col">
-          <DocumentInput />
+          <DocumentInput title={data.title} id={data._id} />
           <div className="flex">
             <Menubar className="border-none bg-transparent shadow-none h-auto p-0">
               <MenubarMenu>

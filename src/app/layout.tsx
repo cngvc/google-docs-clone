@@ -4,6 +4,8 @@ import { ConvexClientProvider } from "@/providers/convex-client.provider";
 import { Inter } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
+import "@liveblocks/react-tiptap/styles.css";
+import "@liveblocks/react-ui/styles.css";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

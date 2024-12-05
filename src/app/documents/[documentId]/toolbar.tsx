@@ -96,26 +96,26 @@ const Toolbar = () => {
       {
         label: "Comment",
         icon: MessageSquarePlusIcon,
-        isActive: false,
-        onClick: () => {},
+        onClick: () => editor?.chain().focus().addPendingComment().run(),
+        isActive: editor?.isActive("liveblocksCommentMark"),
       },
       {
         label: "List Todo",
         icon: ListTodoIcon,
-        isActive: false,
-        onClick: () => {},
+        onClick: () => editor?.chain().focus().toggleTaskList().run(),
+        isActive: editor?.isActive("taskList"),
       },
       {
         label: "Remove Formatting",
         icon: RemoveFormattingIcon,
         isActive: false,
-        onClick: () => {},
+        onClick: () => editor?.chain().focus().unsetAllMarks().run(),
       },
     ],
   ];
 
   return (
-    <div className="bg-slate-200 px-2.5 py-0.5 rounded-full min-h-12 flex items-center gap-x-1 z-50">
+    <div className="bg-slate-100 px-2.5 py-2 rounded-md lg:rounded-full min-h-12 flex flex-wrap items-center gap-x-1 z-50">
       {sections[0].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}

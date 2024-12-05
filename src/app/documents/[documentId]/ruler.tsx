@@ -2,20 +2,22 @@ import { useRef, useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
 
 import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from "@/constants/margins";
+import { useMutation, useStorage } from "@liveblocks/react";
 
 const markers = Array.from({ length: 83 }, (_, i) => i);
 
 const Ruler = () => {
-  const leftMargin = LEFT_MARGIN_DEFAULT as number;
-  // const setLeftMargin = useMutation(({ storage }, position: number) => {
-  //   storage.set("leftMargin", position);
-  // }, []);
+  const leftMargin =
+    useStorage((root) => root.leftMargin) ?? LEFT_MARGIN_DEFAULT;
+  const setLeftMargin = useMutation(({ storage }, position: number) => {
+    storage.set("leftMargin", position);
+  }, []);
 
-  const rightMargin = RIGHT_MARGIN_DEFAULT as number;
-
-  // const setRightMargin = useMutation(({ storage }, position: number) => {
-  //   storage.set("rightMargin", position);
-  // }, []);
+  const rightMargin =
+    useStorage((root) => root.rightMargin) ?? RIGHT_MARGIN_DEFAULT;
+  const setRightMargin = useMutation(({ storage }, position: number) => {
+    storage.set("rightMargin", position);
+  }, []);
 
   const [isDraggingLeft, setIsDraggingLeft] = useState(false);
   const [isDraggingRight, setIsDraggingRight] = useState(false);
@@ -44,7 +46,7 @@ const Ruler = () => {
           const maxLeftPosition =
             PAGE_WIDTH - parseFloat(`${rightMargin}`) - MINIMUM_SPACE;
           const newLeftPosition = Math.min(rawPosition, maxLeftPosition);
-          // setLeftMargin(newLeftPosition);
+          setLeftMargin(newLeftPosition);
         } else if (isDraggingRight) {
           const maxRightPosition =
             PAGE_WIDTH - (parseFloat(`${leftMargin}`) + MINIMUM_SPACE);
@@ -53,7 +55,7 @@ const Ruler = () => {
             newRightPosition,
             maxRightPosition,
           );
-          // setRightMargin(constrainedRightPosition);
+          setRightMargin(constrainedRightPosition);
         }
       }
     }
@@ -65,11 +67,11 @@ const Ruler = () => {
   };
 
   const handleLeftDoubleClick = () => {
-    // setLeftMargin(LEFT_MARGIN_DEFAULT);
+    setLeftMargin(LEFT_MARGIN_DEFAULT);
   };
 
   const handleRightDoubleClick = () => {
-    // setRightMargin(RIGHT_MARGIN_DEFAULT);
+    setRightMargin(RIGHT_MARGIN_DEFAULT);
   };
 
   return (

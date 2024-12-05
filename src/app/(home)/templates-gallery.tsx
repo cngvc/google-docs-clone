@@ -12,13 +12,26 @@ import {
 } from "@/components/ui/carousel";
 import { templates } from "@/constants/templates";
 import { cn } from "@/lib/utils";
+import { api } from "@convex/_generated/api";
+import { useMutation } from "convex/react";
+import { toast } from "sonner";
 
-export const TemplatesGallery = () => {
+const TemplatesGallery = () => {
   const router = useRouter();
-  const [isCreating, setIsCreating] = useState(false);
+  const create = useMutation(api.documents.create);
+  const [isCreating, $isCreating] = useState(false);
 
   const onTemplateClick = (title: string, initialContent: string) => {
-    setIsCreating(true);
+    $isCreating(true);
+    create({ title, initialContent })
+      .catch(() => toast.error("Something went wrong"))
+      .then((documentId) => {
+        toast.success("Document created");
+        router.push(`/documents/${documentId}`);
+      })
+      .finally(() => {
+        $isCreating(false);
+      });
   };
 
   return (
@@ -65,3 +78,5 @@ export const TemplatesGallery = () => {
     </div>
   );
 };
+
+export default TemplatesGallery;

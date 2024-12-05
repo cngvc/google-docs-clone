@@ -1,6 +1,6 @@
 "use client";
 
-import { FullscreenLoader } from "@/components/ui/fullscreen-loader";
+import FullscreenLoader from "@/components/ui/fullscreen-loader";
 import { ClerkProvider, SignIn, useAuth } from "@clerk/nextjs";
 import {
   Authenticated,
